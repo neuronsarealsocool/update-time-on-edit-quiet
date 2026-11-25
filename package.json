@@ -1,9 +1,10 @@
 {
-  "name": "obsidian-update-time-on-edit",
-  "version": "2.4.0",
+  "name": "obsidian-update-time-on-edit-quiet",
+  "version": "2.4.1",
   "description": "Keep the updated front matter header in sync with the last edit",
   "main": "main.js",
   "scripts": {
+    "test": "jest --runInBand",
     "dev": "node esbuild.config.mjs",
     "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
     "version": "node version-bump.mjs && git add manifest.json versions.json",

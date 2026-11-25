@@ -17,3 +17,7 @@
         }
     }
 }
+/* Hide only the successful automatic-merge notice, in every Obsidian window. */
+.notice[data-update-time-quiet-merge="true"] {
+  display: none !important;
+}

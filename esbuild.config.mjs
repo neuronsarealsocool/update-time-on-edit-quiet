@@ -77,7 +77,7 @@ async function watchCopyToVault() {
     process.env.OBSIDIAN_VAULT,
     '.obsidian',
     'plugins',
-    'update-time-on-edit',
+    'update-time-on-edit-quiet',
   );
 
   if (!fs.exists(pluginDir)) {

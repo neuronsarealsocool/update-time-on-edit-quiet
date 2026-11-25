@@ -1,10 +1,10 @@
 {
-	"id": "update-time-on-edit",
-	"name": "Update time on edit",
-	"version": "2.4.0",
+	"id": "update-time-on-edit-quiet",
+	"name": "Update time on edit — Quiet",
+	"version": "2.4.1",
 	"minAppVersion": "1.4.4",
-	"description": "Keep front matter in sync with the last edit time",
-	"author": "@beaussan",
-	"authorUrl": "https://github.com/beaussan",
+	"description": "Keep note dates updated while hiding the successful automatic-merge notification.",
+	"author": "neuronsarealsocool (fork of @beaussan)",
+	"authorUrl": "https://github.com/neuronsarealsocool/update-time-on-edit-quiet",
 	"isDesktopOnly": false
 }

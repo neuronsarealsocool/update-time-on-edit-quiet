@@ -1,16 +1,31 @@
-# Update time on edit plugin
+# Update time on edit — Quiet
 
-This plugin update on save the metadata of the file with the time it was updated, and the time of creation if there is none (useful for new files).
+An MIT-licensed fork of [beaussan/update-time-on-edit-obsidian](https://github.com/beaussan/update-time-on-edit-obsidian), based on upstream 2.4.0, with a separate plugin ID.
 
-Here is a list of feature this plugin provides :
-- Keep in sync the `mtime` (last modified time) in a property key (default to `updated`)
-- Keep in sync the `ctime` (file creation time) in a property key (default to `created`)
-- Customize the date format, default to obsidian date format for property display
-- Supports string and number property data types, the later being useful for Unix timestamps
-- Ignore folder for all update, useful for template files
-- Ignore folder for the creation property
-- Works on mobile & desktop
+Keeps `updated` and `created` properties in sync, with the upstream date formats, ignored folders, update interval and bulk-update commands.
 
-This plugin will read the `ctime` and `mtime` from obsidian, and thus, the file system. **If file change from an external source, the header keys will be updated**.
+While enabled, hides only Obsidian's English notice:
 
-Remember to backup your vault since this plugin will modify files.
+> "filename.md" has been modified externally, merging changes automatically.
+
+The notice is filtered before painting in the main window and popout windows, including notices whose text is filled later. Other notices, including save failures, malformed YAML and sync errors, remain visible. Automatic merging itself continues normally. Hiding a notice does not resolve the underlying conflicting writes. The filter is removed when the plugin is disabled. A future change to Obsidian's notice text or markup may require a fork update.
+
+## Install with BRAT
+
+Add `neuronsarealsocool/update-time-on-edit-quiet` in BRAT. Disable the original **Update time on edit**, including its entry in Lazy Plugins, to avoid duplicate writers. Enable **Update time on edit — Quiet**.
+
+To migrate settings, close or disable both plugins and copy the original plugin's `data.json` into `.obsidian/plugins/update-time-on-edit-quiet/`. This file contains personal vault paths and must not be committed or shared.
+
+For manual installation, download `main.js`, `manifest.json` and `styles.css` from the release into `.obsidian/plugins/update-time-on-edit-quiet/`.
+
+## Development
+
+```sh
+npm ci --ignore-scripts
+npm test
+npm run build
+```
+
+Built files are in `dist/`. Release assets include the three plugin files and an AI-ready archive containing source, tests, build configuration and compiled files. It excludes personal runtime settings, dependencies and Git metadata.
+
+Original implementation: Nicolas Beaussart / @beaussan. Quiet fork: neuronsarealsocool. See [LICENSE](LICENSE).

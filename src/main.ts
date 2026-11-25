@@ -10,6 +10,7 @@ import { isTFile } from './utils';
 import add from 'date-fns/add';
 import isAfter from 'date-fns/isAfter';
 import { sha256 } from 'js-sha256';
+import { silenceMergeNotices } from './QuietMergeNotices';
 
 export default class UpdateTimeOnSavePlugin extends Plugin {
   // @ts-expect-error the settings are hot loaded at init
@@ -44,6 +45,25 @@ export default class UpdateTimeOnSavePlugin extends Plugin {
 
   async onload() {
     this.log('loading plugin IN DEV');
+
+    // Install immediately, before loading settings or beginning timestamp writes.
+    const documents = new Map<Document, () => void>();
+    const watchDocument = (doc: Document) => {
+      if (!documents.has(doc)) documents.set(doc, silenceMergeNotices(doc));
+    };
+    watchDocument(document);
+    this.app.workspace.iterateAllLeaves((leaf) => watchDocument(leaf.view.containerEl.ownerDocument));
+    this.registerEvent(this.app.workspace.on('window-open', (_workspaceWindow, win) => {
+      watchDocument(win.document);
+    }));
+    this.registerEvent(this.app.workspace.on('window-close', (_workspaceWindow, win) => {
+      documents.get(win.document)?.();
+      documents.delete(win.document);
+    }));
+    this.register(() => {
+      documents.forEach((dispose) => dispose());
+      documents.clear();
+    });
 
     await this.loadSettings();
 
