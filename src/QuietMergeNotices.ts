@@ -36,7 +36,10 @@ export function silenceMergeNotices(doc: Document): () => void {
     }
     // Do not retain notices after Obsidian removes them.
     hidden.forEach((notice) => {
-      if (!notice.isConnected) hidden.delete(notice);
+      if (!notice.isConnected) {
+        notice.removeAttribute(QUIET_MERGE_ATTRIBUTE);
+        hidden.delete(notice);
+      }
     });
   });
   observer.observe(doc.body, { childList: true, characterData: true, subtree: true });

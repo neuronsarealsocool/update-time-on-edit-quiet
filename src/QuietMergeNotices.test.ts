@@ -29,6 +29,14 @@ test('filters inserted and updated notices, restores reused messages and unloads
   notice.textContent = merge;
   await flush();
   expect(notice.hasAttribute(QUIET_MERGE_ATTRIBUTE)).toBe(true);
+  notice.remove();
+  await flush();
+  notice.textContent = 'An unrelated notice reusing a removed element';
+  document.body.appendChild(notice);
+  await flush();
+  expect(notice.hasAttribute(QUIET_MERGE_ATTRIBUTE)).toBe(false);
+  notice.textContent = merge;
+  await flush();
   dispose();
   expect(notice.hasAttribute(QUIET_MERGE_ATTRIBUTE)).toBe(false);
   notice.textContent = merge + ' ';
